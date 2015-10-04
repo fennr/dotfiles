@@ -7,15 +7,15 @@ Website:     https://wakatime.com/
 ==========================================================="""
 
 
-__version__ = '4.0.14'
+__version__ = '5.0.0'
 
 
 import sublime
 import sublime_plugin
 
-import glob
 import os
 import platform
+import re
 import sys
 import time
 import threading
@@ -23,6 +23,13 @@ import urllib
 import webbrowser
 from datetime import datetime
 from subprocess import Popen
+try:
+    import _winreg as winreg  # py2
+except ImportError:
+    try:
+        import winreg  # py3
+    except ImportError:
+        winreg = None
 
 
 # globals
@@ -41,12 +48,33 @@ LOCK = threading.RLock()
 PYTHON_LOCATION = None
 
 
+# Log Levels
+DEBUG = 'DEBUG'
+INFO = 'INFO'
+WARNING = 'WARNING'
+ERROR = 'ERROR'
+
+
 # add wakatime package to path
 sys.path.insert(0, os.path.join(PLUGIN_DIR, 'packages'))
 try:
     from wakatime.base import parseConfigFile
 except ImportError:
     pass
+
+
+def log(lvl, message, *args, **kwargs):
+    try:
+        if lvl == DEBUG and not SETTINGS.get('debug'):
+            return
+        msg = message
+        if len(args) > 0:
+            msg = message.format(*args)
+        elif len(kwargs) > 0:
+            msg = message.format(**kwargs)
+        print('[WakaTime] [{lvl}] {msg}'.format(lvl=lvl, msg=msg))
+    except RuntimeError:
+        sublime.set_timeout(lambda: log(lvl, message, *args, **kwargs), 0)
 
 
 def createConfigFile():
@@ -93,35 +121,116 @@ def prompt_api_key():
             window.show_input_panel('[WakaTime] Enter your wakatime.com api key:', default_key, got_key, None, None)
             return True
         else:
-            print('[WakaTime] Error: Could not prompt for api key because no window found.')
+            log(ERROR, 'Could not prompt for api key because no window found.')
     return False
 
 
 def python_binary():
-    global PYTHON_LOCATION
     if PYTHON_LOCATION is not None:
         return PYTHON_LOCATION
+
+    # look for python in PATH and common install locations
     paths = [
-        "pythonw",
-        "python",
-        "/usr/local/bin/python",
-        "/usr/bin/python",
+        '/',
+        '/usr/local/bin/',
+        '/usr/bin/',
     ]
     for path in paths:
-        try:
-            Popen([path, '--version'])
-            PYTHON_LOCATION = path
+        path = find_python_in_folder(path)
+        if path is not None:
+            set_python_binary_location(path)
             return path
-        except:
-            pass
-    for path in glob.iglob('/python*'):
-        path = os.path.realpath(os.path.join(path, 'pythonw'))
-        try:
-            Popen([path, '--version'])
-            PYTHON_LOCATION = path
-            return path
-        except:
-            pass
+
+    # look for python in windows registry
+    path = find_python_from_registry(r'SOFTWARE\Python\PythonCore')
+    if path is not None:
+        set_python_binary_location(path)
+        return path
+    path = find_python_from_registry(r'SOFTWARE\Wow6432Node\Python\PythonCore')
+    if path is not None:
+        set_python_binary_location(path)
+        return path
+
+    return None
+
+
+def set_python_binary_location(path):
+    global PYTHON_LOCATION
+    PYTHON_LOCATION = path
+    log(DEBUG, 'Python Binary Found: {0}'.format(path))
+
+
+def find_python_from_registry(location, reg=None):
+    if platform.system() != 'Windows' or winreg is None:
+        return None
+
+    if reg is None:
+        path = find_python_from_registry(location, reg=winreg.HKEY_CURRENT_USER)
+        if path is None:
+            path = find_python_from_registry(location, reg=winreg.HKEY_LOCAL_MACHINE)
+        return path
+
+    val = None
+    sub_key = 'InstallPath'
+    compiled = re.compile(r'^\d+\.\d+$')
+
+    try:
+        with winreg.OpenKey(reg, location) as handle:
+            versions = []
+            try:
+                for index in range(1024):
+                    version = winreg.EnumKey(handle, index)
+                    try:
+                        if compiled.search(version):
+                            versions.append(version)
+                    except re.error:
+                        pass
+            except EnvironmentError:
+                pass
+            versions.sort(reverse=True)
+            for version in versions:
+                try:
+                    path = winreg.QueryValue(handle, version + '\\' + sub_key)
+                    if path is not None:
+                        path = find_python_in_folder(path)
+                        if path is not None:
+                            log(DEBUG, 'Found python from {reg}\\{key}\\{version}\\{sub_key}.'.format(
+                                reg=reg,
+                                key=location,
+                                version=version,
+                                sub_key=sub_key,
+                            ))
+                            return path
+                except WindowsError:
+                    log(DEBUG, 'Could not read registry value "{reg}\\{key}\\{version}\\{sub_key}".'.format(
+                        reg=reg,
+                        key=location,
+                        version=version,
+                        sub_key=sub_key,
+                    ))
+    except WindowsError:
+        if SETTINGS.get('debug'):
+            log(DEBUG, 'Could not read registry value "{reg}\\{key}".'.format(
+                reg=reg,
+                key=location,
+            ))
+
+    return val
+
+
+def find_python_in_folder(folder):
+    path = os.path.realpath(os.path.join(folder, 'pythonw'))
+    try:
+        Popen([path, '--version'])
+        return path
+    except:
+        pass
+    path = os.path.realpath(os.path.join(folder, 'python'))
+    try:
+        Popen([path, '--version'])
+        return path
+    except:
+        pass
     return None
 
 
@@ -133,7 +242,7 @@ def obfuscate_apikey(command_list):
             apikey_index = num + 1
             break
     if apikey_index is not None and apikey_index < len(cmd):
-        cmd[apikey_index] = '********-****-****-****-********' + cmd[apikey_index][-4:]
+        cmd[apikey_index] = 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXX' + cmd[apikey_index][-4:]
     return cmd
 
 
@@ -195,6 +304,8 @@ def handle_heartbeat(view, is_write=False):
 
 
 class SendHeartbeatThread(threading.Thread):
+    """Non-blocking thread for sending heartbeats to api.
+    """
 
     def __init__(self, target_file, view, is_write=False, project=None, folders=None, force=False):
         threading.Thread.__init__(self)
@@ -220,7 +331,7 @@ class SendHeartbeatThread(threading.Thread):
 
     def send_heartbeat(self):
         if not self.api_key:
-            print('[WakaTime] Error: missing api key.')
+            log(ERROR, 'missing api key.')
             return
         ua = 'sublime/%d sublime-wakatime/%s' % (ST_VERSION, __version__)
         cmd = [
@@ -246,8 +357,7 @@ class SendHeartbeatThread(threading.Thread):
             cmd.append('--verbose')
         if python_binary():
             cmd.insert(0, python_binary())
-            if self.debug:
-                print('[WakaTime] %s' % ' '.join(obfuscate_apikey(cmd)))
+            log(DEBUG, ' '.join(obfuscate_apikey(cmd)))
             if platform.system() == 'Windows':
                 Popen(cmd, shell=False)
             else:
@@ -255,7 +365,7 @@ class SendHeartbeatThread(threading.Thread):
                     Popen(cmd, stderr=stderr)
             self.sent()
         else:
-            print('[WakaTime] Error: Unable to find python binary.')
+            log(ERROR, 'Unable to find python binary.')
 
     def sent(self):
         sublime.set_timeout(self.set_status_bar, 0)
@@ -274,45 +384,51 @@ class SendHeartbeatThread(threading.Thread):
         }
 
 
+class InstallPython(threading.Thread):
+    """Non-blocking thread for installing Python on Windows machines.
+    """
+
+    def run(self):
+        log(INFO, 'Downloading and installing python...')
+        url = 'https://www.python.org/ftp/python/3.4.3/python-3.4.3.msi'
+        if platform.architecture()[0] == '64bit':
+            url = 'https://www.python.org/ftp/python/3.4.3/python-3.4.3.amd64.msi'
+        python_msi = os.path.join(os.path.expanduser('~'), 'python.msi')
+        try:
+            urllib.urlretrieve(url, python_msi)
+        except AttributeError:
+            urllib.request.urlretrieve(url, python_msi)
+        args = [
+            'msiexec',
+            '/i',
+            python_msi,
+            '/norestart',
+            '/qb!',
+        ]
+        Popen(args)
+
+
 def plugin_loaded():
     global SETTINGS
-    print('[WakaTime] Initializing WakaTime plugin v%s' % __version__)
+    log(INFO, 'Initializing WakaTime plugin v%s' % __version__)
+
+    SETTINGS = sublime.load_settings(SETTINGS_FILE)
 
     if not python_binary():
-        print('[WakaTime] Warning: Python binary not found.')
+        log(WARNING, 'Python binary not found.')
         if platform.system() == 'Windows':
-            install_python()
+            thread = InstallPython()
+            thread.start()
         else:
             sublime.error_message("Unable to find Python binary!\nWakaTime needs Python to work correctly.\n\nGo to https://www.python.org/downloads")
             return
 
-    SETTINGS = sublime.load_settings(SETTINGS_FILE)
     after_loaded()
 
 
 def after_loaded():
     if not prompt_api_key():
         sublime.set_timeout(after_loaded, 500)
-
-
-def install_python():
-    print('[WakaTime] Downloading and installing python...')
-    url = 'https://www.python.org/ftp/python/3.4.3/python-3.4.3.msi'
-    if platform.architecture()[0] == '64bit':
-        url = 'https://www.python.org/ftp/python/3.4.3/python-3.4.3.amd64.msi'
-    python_msi = os.path.join(os.path.expanduser('~'), 'python.msi')
-    try:
-        urllib.urlretrieve(url, python_msi)
-    except AttributeError:
-        urllib.request.urlretrieve(url, python_msi)
-    args = [
-        'msiexec',
-        '/i',
-        python_msi,
-        '/norestart',
-        '/qb!',
-    ]
-    Popen(args)
 
 
 # need to call plugin_loaded because only ST3 will auto-call it

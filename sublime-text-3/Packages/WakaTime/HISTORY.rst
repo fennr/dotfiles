@@ -3,6 +3,57 @@ History
 -------
 
 
+5.0.0 (2015-10-02)
+++++++++++++++++++
+
+- improve logging with levels and log function
+- switch registry warnings to debug log level
+
+
+4.0.20 (2015-10-01)
+++++++++++++++++++
+
+- correctly find python binary in non-Windows environments
+
+
+4.0.19 (2015-10-01)
+++++++++++++++++++
+
+- handle case where ST builtin python does not have _winreg or winreg module
+
+
+4.0.18 (2015-10-01)
+++++++++++++++++++
+
+- find python location from windows registry
+
+
+4.0.17 (2015-10-01)
+++++++++++++++++++
+
+- download python in non blocking background thread for Windows machines
+
+
+4.0.16 (2015-09-29)
+++++++++++++++++++
+
+- upgrade wakatime cli to v4.1.8
+- fix bug in guess_language function
+- improve dependency detection
+- default request timeout of 30 seconds
+- new --timeout command line argument to change request timeout in seconds
+- allow passing command line arguments using sys.argv
+- fix entry point for pypi distribution
+- new --entity and --entitytype command line arguments
+
+
+4.0.15 (2015-08-28)
+++++++++++++++++++
+
+- upgrade wakatime cli to v4.1.3
+- fix local session caching
+
+
 4.0.14 (2015-08-25)
 ++++++++++++++++++
 

@@ -1,4 +1,5 @@
 {
+	"bootstrapped": true,
 	"in_process_packages":
 	[
 	],
@@ -16,6 +17,7 @@
 		"Jedi - Python autocompletion",
 		"Markdown Preview",
 		"Material Theme",
+		"NASM x86 Assembly",
 		"NimLime",
 		"Package Control",
 		"SideBarEnhancements",
