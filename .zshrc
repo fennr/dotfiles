@@ -17,8 +17,8 @@ alias -s {avi,mpeg,mpg,mov,m2v}=mplayer
 alias -s {html,htm}=chromium
 alias -s {png,jpg,gif,svg}=viewnior
 alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
-alias ll='ls -lh --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
-alias la='ls -lha --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
+alias ll='ls -lah --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
+alias la='ls -ah --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias cp="cp -i"
 alias df='df -h'
 alias nvidia='optirun -b primus'
