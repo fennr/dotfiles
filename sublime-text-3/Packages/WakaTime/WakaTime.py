@@ -7,7 +7,7 @@ Website:     https://wakatime.com/
 ==========================================================="""
 
 
-__version__ = '5.0.0'
+__version__ = '5.0.1'
 
 
 import sublime
@@ -131,6 +131,7 @@ def python_binary():
 
     # look for python in PATH and common install locations
     paths = [
+        None,
         '/',
         '/usr/local/bin/',
         '/usr/bin/',
@@ -219,13 +220,17 @@ def find_python_from_registry(location, reg=None):
 
 
 def find_python_in_folder(folder):
-    path = os.path.realpath(os.path.join(folder, 'pythonw'))
+    path = 'pythonw'
+    if folder is not None:
+        path = os.path.realpath(os.path.join(folder, 'pythonw'))
     try:
         Popen([path, '--version'])
         return path
     except:
         pass
-    path = os.path.realpath(os.path.join(folder, 'python'))
+    path = 'python'
+    if folder is not None:
+        path = os.path.realpath(os.path.join(folder, 'python'))
     try:
         Popen([path, '--version'])
         return path
