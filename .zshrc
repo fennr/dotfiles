@@ -21,7 +21,7 @@ alias ll='ls -lah --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --col
 alias la='ls -ah --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias cp="cp -i"
 alias df='df -h'
-alias nvidia='optirun -b primus'
+alias nvidia='vblank_mode=0 optirun -b primus'
 alias unlock='sudo rm /var/lib/pacman/db.lck'
 alias free='free -m'
 alias grep='grep --colour=auto'
@@ -33,13 +33,15 @@ alias extensions='~/.local/share/gnome-shell/extensions/'
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit -m'
-alias gp='git push origin'
+alias gp='git push'
 alias gd='git diff'
 alias gr='git rm'
 alias gocode='~/Documents/Go/'
 alias pycode='~/Documents/Python/'
 alias nimcode='~/Documents/Nim/'
 alias off='gnome-session-quit --power-off'
+alias wiki='wiki-search'
+alias rm='rm -rf'
 
 bindkey '\e[3~' delete-char  # del
 bindkey ';5D' backward-word  # ctrl+left

@@ -54,10 +54,10 @@ ${endif}
 
 # CPU
 ${if_existing /home/hacked/.cover.jpg}
-${voffset -35}${offset 150}${cpugraph 40,200 61AAF6 61AAF6z}${voffset -25}
+${voffset -40}${offset 150}${cpugraph 40,200 61AAF6 61AAF6z}${voffset -25}
 ${voffset 0}${offset 80}${font Ubuntu:size=10,weight:bold}${color2}CPU $cpu%
 ${else}
-${voffset -80}${offset 150}${cpugraph 40,200 61AAF6 61AAF6z}${voffset -45}
+${voffset -50}${offset 150}${cpugraph 40,200 61AAF6 61AAF6z}${voffset -45}
 ${voffset 20}${offset 80}${font Ubuntu:size=10,weight:bold}${color2}CPU $cpu%
 ${endif}
 
