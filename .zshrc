@@ -42,6 +42,13 @@ alias nimcode='~/Documents/Nim/'
 alias off='gnome-session-quit --power-off'
 alias wiki='wiki-search'
 alias rm='rm -rf'
+alias S='sudo pacman -S'
+alias Ss='sudo pacman -Ss'
+alias Syu='sudo pacman -Syu'
+alias Syua='sudo pacman -Syu; yaourt -Syu'
+alias Q='sudo pacman -Q'
+alias R='sudo pacman -R'
+alias pgp='gpg --recv-key'
 
 bindkey '\e[3~' delete-char  # del
 bindkey ';5D' backward-word  # ctrl+left
