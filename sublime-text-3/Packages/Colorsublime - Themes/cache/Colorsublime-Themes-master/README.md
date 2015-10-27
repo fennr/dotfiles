@@ -39,6 +39,7 @@ $ npm run test
 ## Credits
 
 Themes creators
+ - [LingTalfi](https://github.com/lingtalfi)
  - [Zayn Ali](https://twitter.com/zaynali53)
  - Neil Cresswell ([Dark Room](https://github.com/NeilCresswell/themes) themes)
  - [Dave Luke Jr](http://davelukejr.com)
@@ -89,3 +90,5 @@ Themes creators
  - [HaCk3D](https://github.com/HaCk3Dq)
  - [MattDMo](https://github.com/MattDMo)
  - [Ritashugisha](https://github.com/ritashugisha)
+ - [Younes Zakaria](https://github.com/drcd)
+ - [Taiwo Kareem](https://github.com/tushortz) - [Wildlife](https://packagecontrol.io/packages/Wildlife)
