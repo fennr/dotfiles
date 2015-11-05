@@ -1,4 +1,5 @@
 {
+	"check.on_save.output.show": false,
 	"color_scheme": "Packages/User/SublimeLinter/Code-Lover (SL).tmTheme",
 	"font_size": 11,
 	"ignored_packages":
