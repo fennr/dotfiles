@@ -55,6 +55,7 @@ alias aSyu='yaourt -Syu'
 alias aQ='yaourt -Q'
 alias aR='yaourt -R'
 alias pgp='gpg --recv-key'
+alias dotfiles='~/dotfiles/'
 
 bindkey '\e[3~' delete-char  # del
 bindkey ';5D' backward-word  # ctrl+left
