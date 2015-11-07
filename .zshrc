@@ -61,8 +61,7 @@ bindkey ';5D' backward-word  # ctrl+left
 bindkey ';5C' forward-word   # ctrl+right
 
 # extract <file>
-ex ()
-{
+ex () {
   if [ -f $1 ] ; then
     case $1 in
       *.tar.bz2)   tar xjf $1   ;;
@@ -83,13 +82,16 @@ ex ()
   fi
 }
 
-# convert <int> to <hex>
-hex() {
-   emulate -L zsh
-   if [[ -n "$1" ]]; then
-       printf "%x\n" $1
-   fi
+sudo-command-line() {
+    [[ -z $BUFFER ]] && zle up-history
+    if [[ $BUFFER == sudo\ * ]]; then
+        LBUFFER="${LBUFFER#sudo }"
+    else
+        LBUFFER="sudo $LBUFFER"
+    fi
 }
+zle -N sudo-command-line
+bindkey "\e\e" sudo-command-line
 
 typeset -A key
 key[Home]=${terminfo[khome]}
