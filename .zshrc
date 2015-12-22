@@ -27,7 +27,7 @@ alias free='free -m'
 alias grep='grep --colour=auto'
 alias nimc='nim c --verbosity:0'
 alias nimcr='nim c -r --verbosity:0 -d:release --opt:speed'
-alias nimcrssl='nim c -d:ssl --threads:on -r --verbosity:0 --opt:speed --threadAnalysis:off'
+alias nimcrssl='nim c -d:ssl --threads:on -r --verbosity:0 -d:debug --gc:boehm --threadAnalysis:off'
 alias nimi='nim secret'
 alias q='exit'
 alias extensions='~/.local/share/gnome-shell/extensions/'
@@ -58,6 +58,7 @@ alias aQ='yaourt -Q'
 alias aR='yaourt -R'
 alias pgp='gpg --recv-key'
 alias dotfiles='~/dotfiles/'
+alias wow='cd ~/Downloads; nvidia wine WoW/Wow.exe'
 
 bindkey '\e[3~' delete-char  # del
 bindkey ';5D' backward-word  # ctrl+left
