@@ -1,5 +1,4 @@
 export XCURSOR_THEME=FlatbedCursors.Green.Regular &
-setxkbmap -layout "us,ru" -option "grp:caps_toggle" &
 xsetroot -cursor_name left_ptr &
 xrdb ~/.Xresources &
 
