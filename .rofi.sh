@@ -1,0 +1,1 @@
+rofi -show run -font "Cantarell 15" -fg "#FFF" -bg "#0B0C10" -hlfg "#FFF" -hlbg "#2379C2" -o 85 -bw 0 -fuzzy -lines 10 -quiet -separator-style none -hide-scrollbar

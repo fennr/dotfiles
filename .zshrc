@@ -29,8 +29,6 @@ alias nimc='nim c --verbosity:0'
 alias nimcr='nim c -r --verbosity:0 -d:release --opt:speed'
 alias nimcrssl='nim c -d:ssl --threads:on -r --verbosity:0 -d:debug --gc:boehm --threadAnalysis:off'
 alias nimi='nim secret'
-alias q='exit'
-alias extensions='~/.local/share/gnome-shell/extensions/'
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit -m'
@@ -39,11 +37,7 @@ alias gpl='git pull origin'
 alias gd='git diff'
 alias gr='git rm'
 alias gl='git lg'
-alias gocode='~/Documents/Go/'
-alias pycode='~/Documents/Python/'
-alias nimcode='~/Documents/Nim/'
-alias off='gnome-session-quit --power-off'
-alias wiki='wiki-search'
+alias wiki='wiki-search' # arch-wiki-lite
 alias rm='rm -rf'
 alias S='sudo pacman -S'
 alias Ss='sudo pacman -Ss'
@@ -51,14 +45,12 @@ alias Syu='sudo pacman -Syu'
 alias Syua='yaourt -Syua'
 alias Q='sudo pacman -Q'
 alias R='sudo pacman -R'
+alias Rsc='sudo pacman -Rsc'
 alias aS='yaourt -S'
 alias aSs='yaourt -Ss'
-alias aSyu='yaourt -Syu'
-alias aQ='yaourt -Q'
-alias aR='yaourt -R'
 alias pgp='gpg --recv-key'
-alias dotfiles='~/dotfiles/'
-alias wow='cd ~/Downloads; nvidia wine WoW/Wow.exe'
+alias feh='feh -q -g 1500x800 --scale-down --auto-zoom'
+alias pycode='~/Documents/Python/'
 
 bindkey '\e[3~' delete-char  # del
 bindkey ';5D' backward-word  # ctrl+left
@@ -117,7 +109,6 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-finish
 fi
 
-export GOPATH=/home/hacked/go
 local gitprompt='$(~/dotfiles/gitprompt.py)'
 export PROMPT="%{$fg_bold[blue]%}% %~${gitprompt} %{$fg[white]%}% $ %{$reset_color%}%u"
 byobu; clear;
