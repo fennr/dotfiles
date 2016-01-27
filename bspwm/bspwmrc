@@ -1,0 +1,46 @@
+#!/bin/sh
+
+bspc config border_width        4
+bspc config top_padding         40
+bspc config window_gap          10
+bspc config split_ratio         0.50
+bspc config borderless_monocle  true
+bspc config gapless_monocle     true
+bspc config focus_by_distance   true
+bspc config auto_cancel         true
+
+# Colors
+bspc config focused_border_color \#2379C2
+bspc config normal_border_color none
+bspc config presel_border_color none
+
+bspc monitor -d      
+
+bspc rule -a termite floating=on
+
+bspc rule -a Firefox desktop=^1
+bspc rule -a subl3 desktop=^2
+bspc rule -a nautilus floating=on desktop=^3
+bspc rule -a transmission-gtk floating=on desktop=^3
+bspc rule -a Pinta desktop=^3
+bspc rule -a file-rollex floating=on desktop=^3
+bspc rule -a feh floating=on desktop=^3
+bspc rule -a mplayer floating=on desktop=^3
+bspc rule -a Steam floating=on desktop=^4
+bspc rule -a Battle.net.exe floating=on desktop=^4
+bspc rule -a Hearthstone.exe floating=on desktop=^4
+bspc rule -a mainwindow.py floating=on desktop=^4
+bspc rule -a pavucontrol floating=on desktop=^5
+bspc rule -a connman-gtk floating=on desktop=^5
+bspc rule -a Skype floating=on desktop=^6
+
+
+xsetroot -cursor_name left_ptr
+xset s off
+xset -dpms
+
+feh --bg-scale ~/Pictures/bg.jpg &
+~/./.reader.sh | lemonbar -f "fontawesome:size=18" -f "Cantarell:size=14" -g 1900x35+10+8 -p -u 4 &
+~/./.lemon.py &
+sxhkd -f 100 &
+compton 

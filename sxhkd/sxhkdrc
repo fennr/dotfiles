@@ -1,0 +1,82 @@
+# UTILS
+
+super + Escape
+	python ~/.power.py shutdown
+
+super + grave
+	python ~/.power.py reboot
+
+super + l
+	slimlock
+
+Caps_Lock
+	~/.layout.py
+
+# LAUNCHERS
+
+F3
+	sh ~/.toggle.sh
+
+Sys_Req
+	gnome-screenshot
+
+super + r
+	sh ~/.rofi.sh
+
+super + v
+	nautilus
+
+super + b
+	firefox
+
+super + c
+	subl3
+
+super + x
+	termite
+
+# SOUND
+
+alt + e
+	pactl -- set-sink-volume 0 -5%
+
+alt + r
+	pactl -- set-sink-volume 0 +5%
+
+alt + m
+	pactl set-sink-mute 0 toggle
+
+# WM
+
+alt + q
+	bspc window -c
+
+alt + {z,f}
+	bspc window -t {floating,fullscreen}
+
+super + {a,s,w,d}
+	bspc window -s {left,down,up,right}
+
+alt + {a,s,w,d}
+	bspc window -f {left,down,up,right}
+
+alt + Tab
+	bspc window -f next
+
+super + shift + {1-7}
+	bspc window -d ^{1-7}
+
+super + {1-7}
+	bspc desktop -f ^{1-7}
+
+~button1
+	bspc pointer -g focus
+
+super + button{1,3}
+	bspc pointer -g {move,resize_corner}
+
+super + !button{1,3}
+	bspc pointer -t %i %i
+
+super + @button{1,3}
+	bspc pointer -u
