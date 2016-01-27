@@ -51,6 +51,8 @@ alias aSs='yaourt -Ss'
 alias pgp='gpg --recv-key'
 alias feh='feh -q -g 1500x800 --scale-down --auto-zoom'
 alias pycode='~/Documents/Python/'
+alias lol='nvidia /usr/share/playonlinux/playonlinux --run "League of Legends"'
+alias hs='nvidia /usr/share/playonlinux/playonlinux --run "Hearthstone"'
 
 bindkey '\e[3~' delete-char  # del
 bindkey ';5D' backward-word  # ctrl+left
@@ -110,5 +112,6 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 fi
 
 local gitprompt='$(~/dotfiles/gitprompt.py)'
+export EDITOR="subl3"
 export PROMPT="%{$fg_bold[blue]%}% %~${gitprompt} %{$fg[white]%}% $ %{$reset_color%}%u"
 byobu; clear;
