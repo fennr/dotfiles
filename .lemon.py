@@ -142,7 +142,7 @@ while 1:
 
   selected, winarray = windows()
   for win in winarray[selected]:
-    if win.endswith("*"): focused = win[win.find("m")+2:]
+    if win.endswith("*"): focused = win[win.find(" ")+1:]
   focused = focused[:focused.find(" ")]
   if last != focused:
     if   focused in En: setlayout(1)

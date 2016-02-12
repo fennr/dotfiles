@@ -1,7 +1,7 @@
 #!/bin/sh
 mkdir -p ~/.config
 ln -s ~/dotfiles/.zshrc ~/.zshrc
-ln -s ~/dotfiles/.conkyrc ~/.conkyrc
+ln -s ~/dotfiles/.byobu ~/.byobu
 ln -s ~/dotfiles/.gitconfig ~/.gitconfig
 ln -s ~/dotfiles/htop ~/.config/
 ln -s ~/dotfiles/termite ~/.config/
@@ -9,7 +9,6 @@ ln -s ~/dotfiles/sublime-text-3 ~/.config/
 ln -s ~/dotfiles/bspwm ~/.config
 ln -s ~/dotfiles/sxhkd ~/.config
 ln -s ~/dotfiles/.dircolors ~/
-ln -s ~/dotfiles/.tmux.conf ~/
 ln -s ~/dotfiles/.Xresources ~/
 ln -s ~/dotfiles/.reader.sh ~/
 ln -s ~/dotfiles/.rofi.sh ~/

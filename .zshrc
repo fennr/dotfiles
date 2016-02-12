@@ -53,6 +53,7 @@ alias feh='feh -q -g 1500x800 --scale-down --auto-zoom'
 alias pycode='~/Documents/Python/'
 alias lol='nvidia /usr/share/playonlinux/playonlinux --run "League of Legends"'
 alias hs='nvidia /usr/share/playonlinux/playonlinux --run "Hearthstone"'
+alias poe='nvidia /usr/share/playonlinux/playonlinux --run "Path of Exile"'
 
 bindkey '\e[3~' delete-char  # del
 bindkey ';5D' backward-word  # ctrl+left
