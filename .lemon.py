@@ -39,11 +39,11 @@ def desknames():
   return run(["bspc", "query", "-D"]).replace("\n", "")
 
 def windows():
-  deskn    = -1
-  names    = desknames()
-  status   = run(["bspc", "query", "-T"])
-  wins     = [[], [], [], [], [], []]
-  selec    = 0
+  deskn  = -1
+  names  = desknames()
+  status = run(["bspc", "query", "-T"])
+  wins   = [[], [], [], [], [], []]
+  selec  = 0
 
   for line in status.splitlines()[1:]:
     if line[1:].find("V m") != -1:
@@ -83,7 +83,6 @@ def battery():
   raw     = run(["acpi"])[11:-1]
   icon    = ""
   time    = ""
-  percent = int(raw[raw.find(" ")+1:raw.find("%")])
   time = raw[raw.find("%,")+4:raw.find("%,")+8]
   if "until" in raw:
     icon = WIRED + " "
@@ -92,6 +91,7 @@ def battery():
     icon = WIRED
     time = ""
   elif "remaining" in raw:
+    percent = int(raw[raw.find(" ")+1:raw.find("%")])
     if   percent <= 5:   icon = B_CRITICAL
     elif percent <= 25:  icon = B_LOW
     elif percent <= 50:  icon = B_HALF
@@ -131,7 +131,6 @@ def setlayout(lang):
   ru    = '"ru,us"'
   if lang == 1: os.system(start + en + end)
   else: os.system(start + ru + end)
-
 
 last = ""
 focused = ""

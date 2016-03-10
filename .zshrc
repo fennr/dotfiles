@@ -1,6 +1,6 @@
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 
 setopt autocd extendedglob nomatch notify correctall promptsubst
 unsetopt appendhistory beep
@@ -12,7 +12,7 @@ compinit
 
 eval $(dircolors ~/.dircolors)
 autoload -U pick-web-browser
-alias -s {go,txt,cfg,c,cpp,rb,asm,nim}=subl3
+alias -s {go,txt,cfg,c,cpp,rb,asm,nim,conf}=subl3
 alias -s {avi,mpeg,mpg,mov,m2v}=mplayer
 alias -s {html,htm}=chromium
 alias -s {png,jpg,gif,svg}=viewnior
@@ -51,6 +51,10 @@ alias aSs='yaourt -Ss'
 alias pgp='gpg --recv-key'
 alias feh='feh -q -g 1500x800 --scale-down --auto-zoom'
 alias pycode='~/Documents/Python/'
+alias dcode='~/Documents/D/'
+alias dr='dmd -run'
+alias dc='dmd'
+alias dcr='dmd -O -release -inline -boundscheck=off'
 alias lol='nvidia /usr/share/playonlinux/playonlinux --run "League of Legends"'
 alias hs='nvidia /usr/share/playonlinux/playonlinux --run "Hearthstone"'
 alias poe='nvidia /usr/share/playonlinux/playonlinux --run "Path of Exile"'
