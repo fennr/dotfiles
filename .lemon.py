@@ -24,10 +24,6 @@ WIRED      = ""
 VOLUME  = ""
 WIFI    = ""
 
-# LANG RULES
-En = ["", "Termite", "Subl3", "Nautilus", "Wine"]
-Ru = ["Firefox"]
-
 def run(arg):
   return subprocess.Popen(arg, stdout=subprocess.PIPE).stdout.read().decode(encoding="UTF-8")
 
@@ -41,26 +37,25 @@ def desknames():
 def windows():
   deskn  = -1
   names  = desknames()
-  status = run(["bspc", "query", "-T"])
-  wins   = [[], [], [], [], [], []]
+  status = run(["bspc", "wm", "-g"])
+  wins   = [0, 0, 0, 0, 0, 0]
   selec  = 0
 
-  for line in status.splitlines()[1:]:
-    if line[1:].find("V m") != -1:
-      continue
-    if line[1:].find("0,0,0,0") != -1:
-      deskn += 1
-      if line.endswith("*"): selec = deskn
-      continue
-    wins[deskn].append(line)
+  for i, e in enumerate(status.split(":")):
+    if e[0] == "O":
+      selec = i-1
+      wins[i-1] = 1
+    if e[0] == "F": selec = i-1
+    if e[0] == "o": wins[i-1] = 1
   return selec, wins
 
 def deskbar():
   selected, winds = windows()
+  print(winds)
   bar = ""
   if selected == 0: bar = SELECTED + bar
   for num, deskname in enumerate(desknames()):
-    if len(winds[num]) != 0:
+    if winds[num] == 1:
       if num == selected: bar += SELECTED + "   " + WHITE + deskname + "   " + BG_BLACK
       else: bar += "   " + WHITE + deskname + "   "
     else:
@@ -124,28 +119,7 @@ def stats():
 def getlayout():
   return run(["setxkbmap", "-print"]).splitlines()[4][29:31]
 
-def setlayout(lang):
-  start = "setxkbmap -layout "
-  end   = ' -option "grp:caps_toggle"'
-  en    = '"us,ru"'
-  ru    = '"ru,us"'
-  if lang == 1: os.system(start + en + end)
-  else: os.system(start + ru + end)
-
-last = ""
-focused = ""
-
 while 1:
   f = open(".bar", "w")
   f.write(INIT + deskbar() + CENTER + get_time() + RIGHT + stats() + sysinfo() + END)
-
-  selected, winarray = windows()
-  for win in winarray[selected]:
-    if win.endswith("*"): focused = win[win.find(" ")+1:]
-  focused = focused[:focused.find(" ")]
-  if last != focused:
-    if   focused in En: setlayout(1)
-    elif focused in Ru: setlayout(0)
-    last = focused
-
   time.sleep(.05)

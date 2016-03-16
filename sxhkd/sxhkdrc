@@ -49,22 +49,22 @@ alt + m
 # WM
 
 alt + q
-	bspc window -c
+	bspc node focused -c
 
-alt + {z,f}
-	bspc window -t {floating,fullscreen}
+alt + {z,t,f}
+	bspc node focused -t {floating,tiled,fullscreen}
 
 super + {a,s,w,d}
-	bspc window -s {left,down,up,right}
+	bspc node focused -s {west,south,north,east}
 
 alt + {a,s,w,d}
-	bspc window -f {left,down,up,right}
+	bspc node focused -f {west,south,north,east}
 
 alt + Tab
-	bspc window -f next
+	bspc node focused -f next
 
 super + shift + {1-7}
-	bspc window -d ^{1-7}
+	bspc node focused -d ^{1-7}
 
 super + {1-7}
 	bspc desktop -f ^{1-7}

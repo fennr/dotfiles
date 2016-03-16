@@ -16,30 +16,27 @@ bspc config presel_border_color none
 
 bspc monitor -d      
 
-bspc rule -a Firefox desktop=^1
+bspc rule -a Firefox desktop='^1'
 
-bspc rule -a subl3 desktop=^2
-bspc rule -a termite desktop=^2
+bspc rule -a Subl3 desktop='^2'
+bspc rule -a Termite desktop='^2'
 
-bspc rule -a nautilus floating=on desktop=^3
-bspc rule -a transmission-gtk floating=on desktop=^3
-bspc rule -a Pinta desktop=^3
-bspc rule -a file-rollex floating=on desktop=^3
-bspc rule -a feh floating=on desktop=^3
-bspc rule -a mplayer floating=on desktop=^3
+bspc rule -a Nautilus state=floating center=on desktop='^3'
+bspc rule -a Transmission-gtk state=floating desktop='^3'
+bspc rule -a Pinta desktop='^3'
+bspc rule -a file-rollex state=floating center=on desktop='^3'
+bspc rule -a feh state=floating desktop='^3'
+bspc rule -a mplayer state=floating center=on desktop='^3'
 
-bspc rule -a Steam floating=on desktop=^4
-bspc rule -a Battle.net.exe floating=on desktop=^4
-bspc rule -a LoLPatcherUx.exe floating=on desktop=^4
-bspc rule -a LolClient.exe floating=on desktop=^4
-bspc rule -a rads_user_kernel.exe floating=on desktop=^4
-bspc rule -a Hearthstone.exe floating=on desktop=^4
-bspc rule -a mainwindow.py floating=on desktop=^4
+bspc rule -a Steam state=floating center=on desktop='^4'
+bspc rule -a Battle.net.exe state=floating center=on desktop='^4'
+bspc rule -a Hearthstone.exe state=floating center=on desktop='^4'
+bspc rule -a mainwindow.py state=floating desktop='^4'
 
-bspc rule -a pavucontrol floating=on desktop=^5
-bspc rule -a connman-gtk floating=on desktop=^5
+bspc rule -a pavucontrol state=floating center=on desktop='^5'
+bspc rule -a Connman-gtk state=floating center=on desktop='^5'
 
-bspc rule -a Skype floating=on desktop=^6
+bspc rule -a Skype state=floating desktop='^6'
 
 
 xsetroot -cursor_name left_ptr
@@ -50,4 +47,5 @@ feh --bg-scale ~/Pictures/bg.jpg &
 ~/./.reader.sh | lemonbar -f "fontawesome:size=18" -f "Cantarell:size=14" -g 1900x35+10+8 -p -u 4 &
 ~/./.lemon.py &
 sxhkd -f 100 &
+setxkbmap -option caps:none &
 compton
