@@ -51,7 +51,6 @@ def windows():
 
 def deskbar():
   selected, winds = windows()
-  print(winds)
   bar = ""
   if selected == 0: bar = SELECTED + bar
   for num, deskname in enumerate(desknames()):
