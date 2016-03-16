@@ -33,7 +33,7 @@ bspc rule -a Battle.net.exe state=floating center=on desktop='^4'
 bspc rule -a Hearthstone.exe state=floating center=on desktop='^4'
 bspc rule -a mainwindow.py state=floating desktop='^4'
 
-bspc rule -a pavucontrol state=floating center=on desktop='^5'
+bspc rule -a Pavucontrol state=floating center=on desktop='^5'
 bspc rule -a Connman-gtk state=floating center=on desktop='^5'
 
 bspc rule -a Skype state=floating desktop='^6'
