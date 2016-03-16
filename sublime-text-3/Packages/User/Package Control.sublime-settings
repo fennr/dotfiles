@@ -6,6 +6,8 @@
 	"installed_packages":
 	[
 		"AlignTab",
+		"arduino-cli",
+		"Arduino-like IDE",
 		"AutoAligner",
 		"AutoFileName",
 		"BufferScroll",
