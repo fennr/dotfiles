@@ -7,7 +7,7 @@ super + grave
 	python ~/.power.py reboot
 
 super + l
-	slimlock
+	i3lock-fancy -p
 
 Caps_Lock
 	~/.layout.py
