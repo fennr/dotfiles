@@ -9,6 +9,7 @@ ln -s ~/dotfiles/termite ~/.config/
 ln -s ~/dotfiles/sublime-text-3 ~/.config/
 ln -s ~/dotfiles/bspwm ~/.config
 ln -s ~/dotfiles/sxhkd ~/.config
+ln -s ~/dotfiles/compton.conf ~/.config
 ln -s ~/dotfiles/.dircolors ~/
 ln -s ~/dotfiles/.Xresources ~/
 ln -s ~/dotfiles/.reader.sh ~/
