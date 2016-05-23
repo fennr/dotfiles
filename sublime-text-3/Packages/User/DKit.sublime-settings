@@ -1,7 +1,0 @@
-{
-  "dcd_path": "/home/hacked/Documents/DCD/",
-  "dcd_port": 9166,
-  "include_paths": [
-    "/usr/include/dlang/dmd/"
-  ]
-}
