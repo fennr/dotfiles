@@ -69,7 +69,7 @@ def volume():
   return VOLUME + value + "%  "
 
 def wifi():
-  raw = run(["iwgetid"]).splitlines()[0][17:-1]
+  raw = run(["iwgetid"])[17:-2]
   if "ff" in raw: return ""
   return WIFI + " " + raw + "  "
 
