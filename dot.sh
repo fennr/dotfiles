@@ -3,10 +3,7 @@ mkdir -p ~/.config
 ln -s ~/dotfiles/.zshrc ~/.zshrc
 ln -s ~/dotfiles/.byobu ~/.byobu
 ln -s ~/dotfiles/.gitconfig ~/.gitconfig
-ln -s ~/dotfiles/htop ~/.config/
 ln -s ~/dotfiles/gtk-3.0 ~/.config/
-ln -s ~/dotfiles/termite ~/.config/
-ln -s ~/dotfiles/sublime-text-3 ~/.config/
 ln -s ~/dotfiles/bspwm ~/.config
 ln -s ~/dotfiles/sxhkd ~/.config
 ln -s ~/dotfiles/compton.conf ~/.config
