@@ -76,15 +76,21 @@ def wifi():
 def battery():
   raw     = run(["acpi"])[11:-1]
   icon    = ""
-  if "until" in raw:
-    if   percent <= 5:   icon = WIRED + " " +  B_CRITICAL
+
+  if "Charging" in raw:
+    percent = int(raw[raw.find(" ")+1:raw.find("%")])
+    if   percent <= 5:   icon = WIRED + " " + B_CRITICAL
     elif percent <= 25:  icon = WIRED + " " + B_LOW
     elif percent <= 50:  icon = WIRED + " " + B_HALF
     elif percent <= 75:  icon = WIRED + " " + B_ALMOST
     elif percent <= 100: icon = WIRED + " " + B_FULL
+    icon += " "
+
   elif "Full" in raw:
-    icon = WIRED
-  elif "remaining" in raw:
+    icon = WIRED + " " 
+    return RED + icon + B_FULL
+
+  elif "Discharging" in raw:
     percent = int(raw[raw.find(" ")+1:raw.find("%")])
     if   percent <= 5:   icon = B_CRITICAL
     elif percent <= 25:  icon = B_LOW
@@ -93,6 +99,7 @@ def battery():
     elif percent <= 100: icon = B_FULL
     icon += " "
     if icon == B_LOW + " ": return RED + icon
+    
   return icon
 
 def sysinfo():
