@@ -1,47 +1,44 @@
 # UTILS
 
-super + Escape
+super + shift + Escape
 	python ~/.power.py shutdown
 
-super + grave
+super + shift + grave
 	python ~/.power.py reboot
 
 super + l
 	i3lock-fancy -p
 
-F1
+Caps_Lock
+	~/.layout.py
+	
+ctrl + space
+	~/.layout.py
+	
+alt + shift
 	~/.layout.py
 
 # LAUNCHERS
 
-super + u
-       pamac-updater
+#F3
+#	sh ~/.toggle.sh
 
-F3
-	sh ~/.toggle.sh
-
-F4
-	mate-screenshot
-	
-super + t
-	transmission-gtk
+Sys_Req
+	gnome-screenshot
 
 super + r
 	sh ~/.rofi.sh
 
 super + v
-	caja
+	nautilus
 
 super + b
-	vivaldi-stable
+	firefox
 
 super + c
 	subl3
 
 super + x
-	mate-terminal
-
-alt + x
 	termite
 
 # SOUND
@@ -77,14 +74,15 @@ super + shift + {1-7}
 
 super + {1-7}
 	bspc desktop -f ^{1-7}
-	
+
 ~button1
 	bspc pointer -g focus
 
-super + button{1,3}
-	bspc pointer -g {move,resize_corner}
+#super + button{1,3}
+#	bspc pointer -g {move,resize_corner}
 
-super + !button{1,3}
-	bspc pointer -t %i %i
+#super + !button{1,3}
+#	bspc pointer -t %i %i
 
-super + @button{1,3}
+#super + @button{1,3}
+#	bspc pointer -u

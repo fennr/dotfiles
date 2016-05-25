@@ -43,8 +43,9 @@ xsetroot -cursor_name left_ptr
 xset -dpms
 xset s off
 
-feh --bg-scale ~/Изображения/1.jpg &
-~/./.reader.sh | lemonbar -f "fontawesome:size=18" -f "Cantarell:size=14" -g 1255x30+10+8 -p -u 4 &
+feh --bg-scale ~/dotfiles/Pictures/bg.png &
+# измените значение в следующей строке на разрешение вашего монитора
+~/./.reader.sh | lemonbar -f "fontawesome:size=18" -f "Cantarell:size=14" -g 1346x35+10+8 -p -u 4 &
 ~/./.lemon.py &
 sxhkd -f 100 &
 setxkbmap -option caps:none &
