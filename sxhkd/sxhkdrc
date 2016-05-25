@@ -1,9 +1,9 @@
 # UTILS
 
-super + Escape
+super + shift + Escape
 	python ~/.power.py shutdown
 
-super + grave
+super + shift + grave
 	python ~/.power.py reboot
 
 super + l
