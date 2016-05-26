@@ -28,8 +28,8 @@ def run(arg):
   return subprocess.Popen(arg, stdout=subprocess.PIPE).stdout.read().decode(encoding="UTF-8")
 
 def get_time():
-  raw = run("date")[:16]
-  return raw[:10] + "," + raw[10:]
+  raw = run("date")[:15]
+  return raw[:9] + "," + raw[9:]
 
 def desknames():
   return run(["bspc", "query", "-D"]).replace("\n", "")
@@ -69,28 +69,22 @@ def volume():
   return VOLUME + value + "%  "
 
 def wifi():
-  raw = run(["iwgetid"])[17:-2]
+  raw = run(["iwconfig"]).splitlines()[0][33:-3]
   if "ff" in raw: return ""
   return WIFI + " " + raw + "  "
 
 def battery():
   raw     = run(["acpi"])[11:-1]
   icon    = ""
-
-  if "Charging" in raw:
-    percent = int(raw[raw.find(" ")+1:raw.find("%")])
-    if   percent <= 5:   icon = WIRED + " " + B_CRITICAL
-    elif percent <= 25:  icon = WIRED + " " + B_LOW
-    elif percent <= 50:  icon = WIRED + " " + B_HALF
-    elif percent <= 75:  icon = WIRED + " " + B_ALMOST
-    elif percent <= 100: icon = WIRED + " " + B_FULL
-    icon += " "
-
+  time    = ""
+  time = raw[raw.find("%,")+4:raw.find("%,")+8]
+  if "until" or "Scharging" in raw:
+    icon = WIRED + " "
+    if time == "unti": time = ""
   elif "Full" in raw:
-    icon = WIRED + " " 
-    return RED + icon + B_FULL
-
-  elif "Discharging" in raw:
+    icon = WIRED
+    time = ""
+  elif "remaining" or "Discharging" in raw:
     percent = int(raw[raw.find(" ")+1:raw.find("%")])
     if   percent <= 5:   icon = B_CRITICAL
     elif percent <= 25:  icon = B_LOW
@@ -98,17 +92,36 @@ def battery():
     elif percent <= 75:  icon = B_ALMOST
     elif percent <= 100: icon = B_FULL
     icon += " "
-    if icon == B_LOW + " ": return RED + icon
-    
-  return icon
+    if icon == B_LOW + " ": return RED + icon + time
+  return icon + time
 
 def sysinfo():
   return "%s  %s%s%s" % (getlayout(), volume(), wifi(), battery())
+
+def stats():
+  '''
+  f         = open(".toggle", "r")
+  state     = f.read()[0]
+  if state == "1":
+    space   = "  "
+    offset  = " " * 30
+    rawmem  = run(["free", "-m"]).splitlines()[1]
+    mem     = int(rawmem[26:32])
+    cpuraw  = run(["top", "-bn2", "u1"]).splitlines()[13:17]
+    cpu     = 0
+    for c in cpuraw: cpu += int(c[c.find(":")+1:c.find(",")])
+    cpu     = cpu // 4
+    rawtemp = run("sensors").splitlines()[2:3][0]
+    temp    = rawtemp[rawtemp.find("+")+1:rawtemp.find(".")]
+    return "mem:" + space + str(mem) + space + "cpu:" + space + str(cpu) + "%" + space + "t:" + space + temp + "°" + offset
+  else: 
+  '''
+  return ""
 
 def getlayout():
   return run(["setxkbmap", "-print"]).splitlines()[4][29:31]
 
 while 1:
   f = open(".bar", "w")
-  f.write(INIT + deskbar() + CENTER + get_time() + RIGHT + sysinfo() + END)
+  f.write(INIT + deskbar() + CENTER + get_time() + RIGHT + stats() + sysinfo() + END)
   time.sleep(.05)

@@ -17,3 +17,4 @@ ln -s ~/dotfiles/.lemon.py ~/
 ln -s ~/dotfiles/.power.py ~/
 ln -s ~/dotfiles/.xinitrc ~/
 ln -s ~/dotfiles/.gtkrc-2.0 ~/
+rm -r ~/dotfiles/images
