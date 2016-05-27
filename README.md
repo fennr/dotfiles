@@ -153,3 +153,22 @@
 * super + r        -   Вызов rofi (контекстное меню для запуска программ)
 
 Остальные команды, а также их изменение (либо смена программ которые активируються) вы найдете в файле sxhkd который находиться по пути /home/user-neme/.config/sxhkd .
+
+
+#Яркость
+
+Имееться индикатор яркости экрана, выглядит он так:
+
+<img src='/images/brightness.png'>
+
+Для его работы измените значение user-name в 62 и 66 строке на имя своего пользователя
+
+   <   # Brightness goes up
+          XF86MonBrightnessUp
+          /home/user-name/.config/bspwm/Scripts/brightnessScript
+
+       # Brightness goes down
+          XF86MonBrightnessDown
+          /home/user-name/.config/bspwm/Scripts/brightnessScript  >
+
+Активация происходит при стандартной смене яркости горячими клавишами Fn+F7, Fn+F8
