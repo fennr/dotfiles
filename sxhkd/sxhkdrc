@@ -52,6 +52,16 @@ alt + r
 alt + m
 	pactl set-sink-mute 0 toggle
 
+#System
+
+# Brightness goes up
+XF86MonBrightnessUp
+    /home/user-name/.config/bspwm/Scripts/brightnessScript
+
+# Brightness goes down
+XF86MonBrightnessDown
+    /home/user-name/.config/bspwm/Scripts/brightnessScript
+
 # WM
 
 alt + q
