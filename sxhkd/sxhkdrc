@@ -40,6 +40,12 @@ super + c
 
 super + x
 	termite
+	
+super + g
+	geany
+	
+super + e
+	sunflower
 
 # SOUND
 
