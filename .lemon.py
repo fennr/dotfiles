@@ -78,13 +78,13 @@ def battery():
   icon    = ""
   time    = ""
   time = raw[raw.find("%,")+4:raw.find("%,")+8]
-  if "until" or "Scharging" in raw:
+  if "until" in raw:
     icon = WIRED + " "
     if time == "unti": time = ""
   elif "Full" in raw:
     icon = WIRED
     time = ""
-  elif "remaining" or "Discharging" in raw:
+  elif "remaining" in raw:
     percent = int(raw[raw.find(" ")+1:raw.find("%")])
     if   percent <= 5:   icon = B_CRITICAL
     elif percent <= 25:  icon = B_LOW
